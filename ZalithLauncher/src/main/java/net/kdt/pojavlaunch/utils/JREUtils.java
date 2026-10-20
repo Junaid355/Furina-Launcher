@@ -285,13 +285,17 @@ public final class JREUtils {
     private static void setCustomEnv(Map<String, String> envMap) throws Throwable {
         File customEnvFile = new File(PathManager.DIR_GAME_HOME, "custom_env.txt");
         if (customEnvFile.exists() && customEnvFile.isFile()) {
-            BufferedReader reader = new BufferedReader(new FileReader(customEnvFile));
-            String line;
-            while ((line = reader.readLine()) != null) {
-                int index = line.indexOf("=");
-                envMap.put(line.substring(0, index), line.substring(index + 1));
+            try (BufferedReader reader = new BufferedReader(new FileReader(customEnvFile))) {
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    String trimmed = line.trim();
+                    if (trimmed.isEmpty() || trimmed.startsWith("#")) continue;
+                    int index = trimmed.indexOf("=");
+                    if (index > 0) {
+                        envMap.put(trimmed.substring(0, index).trim(), trimmed.substring(index + 1).trim());
+                    }
+                }
             }
-            reader.close();
         }
     }
 

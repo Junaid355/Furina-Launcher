@@ -60,7 +60,7 @@ object BackgroundManager {
         callback: CallbackDrawableImageViewTarget.Callback? = null
     ) {
         backgroundView.setImageDrawable(
-            ContextCompat.getDrawable(context, R.color.background_app)
+            ContextCompat.getDrawable(context, R.drawable.background_furina_canvas)
         )
 
         val backgroundImage = getBackgroundImage(backgroundType) ?: run {
@@ -104,10 +104,12 @@ object BackgroundManager {
         }
 
         runCatching {
-            properties.store(
-                FileWriter(FILE_BACKGROUND_PROPERTIES),
-                "${InfoDistributor.APP_NAME} Background Properties File"
-            )
+            FileWriter(FILE_BACKGROUND_PROPERTIES).use { writer ->
+                properties.store(
+                    writer,
+                    "${InfoDistributor.APP_NAME} Background Properties File"
+                )
+            }
         }.getOrElse { e -> Logging.e("saveProperties", Tools.printToString(e)) }
     }
 

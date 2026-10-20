@@ -179,6 +179,67 @@
                         android:layout_marginHorizontal="@dimen/_4sdp"
                         android:text="@string/download_ui_install_local"/>
 
+                    <LinearLayout
+                        android:id="@+id/quick_presets_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_4sdp"
+                        android:layout_marginHorizontal="@dimen/_8sdp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/furina_quick_fps_mods"
+                            android:textStyle="bold"
+                            android:textColor="@color/settings_category" />
+
+                        <HorizontalScrollView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:scrollbars="none">
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+
+                                <com.movtery.zalithlauncher.ui.view.AnimButton
+                                    android:id="@+id/preset_sodium"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="@dimen/_30sdp"
+                                    android:text="Sodium"
+                                    android:textAllCaps="false"
+                                    android:textSize="@dimen/_10ssp" />
+
+                                <com.movtery.zalithlauncher.ui.view.AnimButton
+                                    android:id="@+id/preset_lithium"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="@dimen/_30sdp"
+                                    android:text="Lithium"
+                                    android:textAllCaps="false"
+                                    android:textSize="@dimen/_10ssp" />
+
+                                <com.movtery.zalithlauncher.ui.view.AnimButton
+                                    android:id="@+id/preset_ferritecore"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="@dimen/_30sdp"
+                                    android:text="FerriteCore"
+                                    android:textAllCaps="false"
+                                    android:textSize="@dimen/_10ssp" />
+
+                                <com.movtery.zalithlauncher.ui.view.AnimButton
+                                    android:id="@+id/preset_entityculling"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="@dimen/_30sdp"
+                                    android:text="EntityCulling"
+                                    android:textAllCaps="false"
+                                    android:textSize="@dimen/_10ssp" />
+
+                            </LinearLayout>
+                        </HorizontalScrollView>
+                    </LinearLayout>
+
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/mc_version_layout"
                         android:layout_width="match_parent"

@@ -78,8 +78,8 @@ public class HotbarView extends View implements View.OnLayoutChangeListener, Run
 
     private void init() {
         setAlpha(0);
-        setBackgroundColor(Color.parseColor("#80E64242"));
-        adjustAnimPlayer.duration(800);
+        setBackgroundColor(Color.parseColor("#8038BDF8"));
+        adjustAnimPlayer.duration(600);
         adjustAnimPlayer.apply(new AnimPlayer.Entry(this, Animations.FadeOut));
     }
 
@@ -93,7 +93,7 @@ public class HotbarView extends View implements View.OnLayoutChangeListener, Run
             mParentView = (View) parent;
             mParentView.addOnLayoutChangeListener(this);
         }
-        adaptiveReset();
+        run();
         CallbackBridge.addGrabListener(mGrabListener);
     }
 
@@ -102,6 +102,9 @@ public class HotbarView extends View implements View.OnLayoutChangeListener, Run
         super.onDetachedFromWindow();
         CallbackBridge.removeGrabListener(mGrabListener);
         EventBus.getDefault().unregister(this);
+        if (mParentView != null) {
+            mParentView.removeOnLayoutChangeListener(this);
+        }
     }
 
     /**
@@ -142,8 +145,8 @@ public class HotbarView extends View implements View.OnLayoutChangeListener, Run
     private void adaptiveReset() {
         ViewGroup.MarginLayoutParams marginLayoutParams = getMarginLayoutParams();
         int height;
-        marginLayoutParams.width = mWidth = mcScale(180);
-        marginLayoutParams.height = height = mcScale(20);
+        marginLayoutParams.width = mWidth = Math.max(1, mcScale(180));
+        marginLayoutParams.height = height = Math.max(1, mcScale(22));
         marginLayoutParams.leftMargin = (CallbackBridge.physicalWidth / 2) - (mWidth / 2);
         marginLayoutParams.topMargin = CallbackBridge.physicalHeight - height;
         setLayoutParams(marginLayoutParams);
@@ -162,7 +165,7 @@ public class HotbarView extends View implements View.OnLayoutChangeListener, Run
     @SuppressWarnings("ClickableViewAccessibility") // performClick does not report coordinates.
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        if(!CallbackBridge.isGrabbing()) return false;
+        if(!CallbackBridge.isGrabbing() || mWidth <= 0) return false;
         boolean hasDoubleTapped = mDoubleTapDetector.onTouchEvent(event);
 
         // Check if we need to cancel the drop event
@@ -177,7 +180,11 @@ public class HotbarView extends View implements View.OnLayoutChangeListener, Run
             mDropGesture.cancel();
             return true;
         }
-        int hotbarIndex = (int)MathUtils.map(x, 0, mWidth, 0, HOTBAR_KEYS.length);
+        int hotbarIndex = androidx.core.math.MathUtils.clamp(
+                (int) MathUtils.map(x, 0, mWidth, 0, HOTBAR_KEYS.length),
+                0,
+                HOTBAR_KEYS.length - 1
+        );
         // Check if the slot changed and we need to make a key press
         if(hotbarIndex == mLastIndex) {
             // Only check for doubletapping if the slot has not changed
@@ -221,7 +228,7 @@ public class HotbarView extends View implements View.OnLayoutChangeListener, Run
         if(v.equals(mParentView) && (left != oldLeft || right != oldRight || top != oldTop || bottom != oldBottom)) {
             // Need to post this, because it is not correct to resize the view
             // during a layout pass.
-            post(this::adaptiveReset);
+            post(this);
         }
     }
 }

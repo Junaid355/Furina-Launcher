@@ -19,6 +19,7 @@ import com.movtery.zalithlauncher.databinding.FragmentLauncherBinding;
 import com.movtery.zalithlauncher.event.single.AccountUpdateEvent;
 import com.movtery.zalithlauncher.event.single.LaunchGameEvent;
 import com.movtery.zalithlauncher.event.single.RefreshVersionsEvent;
+import com.movtery.zalithlauncher.feature.performance.PerformanceManager;
 import com.movtery.zalithlauncher.feature.version.Version;
 import com.movtery.zalithlauncher.feature.version.utils.VersionIconUtils;
 import com.movtery.zalithlauncher.feature.version.VersionInfo;
@@ -26,6 +27,7 @@ import com.movtery.zalithlauncher.feature.version.VersionsManager;
 import com.movtery.zalithlauncher.task.TaskExecutors;
 import com.movtery.zalithlauncher.ui.fragment.AboutFragment;
 import com.movtery.zalithlauncher.ui.fragment.ControlButtonFragment;
+import com.movtery.zalithlauncher.ui.fragment.DownloadFragment;
 import com.movtery.zalithlauncher.ui.fragment.FilesFragment;
 import com.movtery.zalithlauncher.ui.fragment.FragmentWithAnim;
 import com.movtery.zalithlauncher.ui.fragment.VersionManagerFragment;
@@ -64,6 +66,10 @@ public class MainMenuFragment extends FragmentWithAnim {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         binding.aboutText.setText(InfoCenter.replaceName(requireActivity(), R.string.about_tab));
         binding.aboutButton.setOnClickListener(v -> ZHTools.swapFragmentWithAnim(this, AboutFragment.class, AboutFragment.TAG, null));
+        binding.boostPerformanceButton.setOnClickListener(v -> PerformanceManager.showOptimizationDialog(
+                requireContext(),
+                () -> ZHTools.swapFragmentWithAnim(this, DownloadFragment.class, DownloadFragment.TAG, null)
+        ));
         binding.customControlButton.setOnClickListener(v -> ZHTools.swapFragmentWithAnim(this, ControlButtonFragment.class, ControlButtonFragment.TAG, null));
         binding.openMainDirButton.setOnClickListener(v -> {
             Bundle bundle = new Bundle();

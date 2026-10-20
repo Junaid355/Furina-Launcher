@@ -72,6 +72,43 @@
                 </com.movtery.zalithlauncher.ui.layout.AnimRelativeLayout>
 
                 <com.movtery.zalithlauncher.ui.layout.AnimRelativeLayout
+                    android:id="@+id/boost_performance_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_12sdp"
+                    android:layout_marginStart="@dimen/_12sdp"
+                    android:layout_marginEnd="@dimen/_8sdp"
+                    android:translationZ="4dp"
+                    android:background="@drawable/background_item"
+                    android:paddingHorizontal="@dimen/_8sdp"
+                    android:paddingVertical="@dimen/_12sdp"
+                    app:ripple_for_relative="true">
+
+                    <ImageView
+                        android:id="@+id/boost_performance_icon"
+                        android:layout_width="@dimen/_24sdp"
+                        android:layout_height="@dimen/_24sdp"
+                        android:layout_marginStart="@dimen/_8sdp"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/ic_setting_video"/>
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_16sdp"
+                        android:layout_marginEnd="@dimen/_8sdp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_toEndOf="@id/boost_performance_icon"
+                        android:text="@string/furina_boost_menu_title"
+                        android:textStyle="bold"
+                        android:textSize="@dimen/_12sdp"
+                        android:textColor="@color/primary_text"/>
+
+                </com.movtery.zalithlauncher.ui.layout.AnimRelativeLayout>
+
+                <com.movtery.zalithlauncher.ui.layout.AnimRelativeLayout
                     android:id="@+id/custom_control_button"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

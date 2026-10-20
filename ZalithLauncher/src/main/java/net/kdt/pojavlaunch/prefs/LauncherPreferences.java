@@ -59,9 +59,11 @@ public class LauncherPreferences {
         if (is32BitsDevice()) return 696;
 
         if (deviceRam < 3064) return 936;
-        if (deviceRam < 4096) return 1144;
-        if (deviceRam < 6144) return 1536;
-        return 2048; //Default RAM allocation for 64 bits
+        if (deviceRam < 4096) return 1280;
+        if (deviceRam < 6144) return 1792;
+        if (deviceRam < 8192) return 2560;
+        if (deviceRam < 11264) return 3328;
+        return 4096; // Smart RAM allocation for 12GB+ 64-bit devices
     }
 
     /** Compute the notch size to avoid being out of bounds */

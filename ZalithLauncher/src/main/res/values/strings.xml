@@ -693,4 +693,12 @@
     <!-- Sponsorship Related -->
     <string name="request_sponsorship_title">Support My Development</string>
     <string name="request_sponsorship_message">Most of the content in this software is developed and maintained by me alone. If you find this software helpful and are in a position to do so, I hope you will consider sponsoring me to give me more motivation to continue developing and improving it. Thank you for your support!</string>
+    <!-- Furina Edition Performance & Mod Hub -->
+    <string name="furina_boost_menu_title">Furina Lag-Free &amp; FPS Boost</string>
+    <string name="furina_boost_title">Furina Hydro Performance Optimizer</string>
+    <string name="furina_boost_dialog_msg">Optimize Minecraft for maximum FPS and zero stutter:\n\n• Smart RAM Auto-Tuning: %d MB\n• Render Scale Preset: %d%%\n• Low-Latency G1GC JVM Flags (35ms max pause)\n• Big-Core CPU Affinity &amp; Sustained Performance\n\nYou can also open the 1-Tap Mod &amp; Modpack Hub to install Sodium, Lithium, FerriteCore, and EntityCulling.</string>
+    <string name="furina_boost_apply_btn">Apply Lag-Free Preset</string>
+    <string name="furina_boost_open_mods_btn">Apply &amp; Open FPS Mod Hub</string>
+    <string name="furina_boost_applied_summary">Furina Lag-Free Preset applied! RAM: %d MB | Scale: %d%% | G1GC + Big-Core enabled</string>
+    <string name="furina_quick_fps_mods">1-Tap FPS Boost Presets</string>
 </resources>

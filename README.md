@@ -18,16 +18,14 @@
 > Attention! This project is only a **community remake**, just like PojavLauncher is developed based on [Boardwalk](https://github.com/zhuowei/Boardwalk).  
 > We are planning to build the official website [zalithlauncher.cn](https://zalithlauncher.cn). Please note, our website domain ends with `.cn`, not `.com`! **That is not our site!** We do not participate in, accept, or trust that site! Please be careful to distinguish it and protect your personal privacy!
 
-<h2 align="center">New Features</h2>
+<h2 align="center">Furina Edition Rework &amp; New Features</h2>
 
-- [x] Refactored app layout for improved aesthetics and usability.
-- [x] Built-in simple file manager to eliminate worries about Android permission restrictions!
-- [x] Better version management, customizable game directory location, allowing settings in external storage directories.
-- [x] Add more renderers, with support for renderer plugins!
-- [x] Download Mods, ModPacks, resource packs, saves, and shader packs directly within the launcher!
-- [x] Customizable virtual mouse icon and launcher background image.
-- [x] Light and dark themes available.
-- [x] And more features!
+- [x] **Dual Furina Aesthetic (Ousia Dark &amp; Pneuma Light)**: Deep Fontaine Navy &amp; Glowing Hydro Cyan dark theme paired with Luminous Pearl Mist &amp; Royal Sapphire light theme, complete with custom Hydro canvas gradients and borders.
+- [x] **Minecraft Mobile (Bedrock-Style) Touch Controls**: Full 3×3 directional D-Pad with diagonal movement (`W+A`, `W+D`, `S+A`, `S+D`), center Sneak toggle (`◇`), dedicated right-thumb Jump/Attack/Use cluster, and top utility strip (`ESC`, `INV`, `3RD`, `CHAT`, `DEBUG`, `GUI`).
+- [x] **Interactive Bedrock Hotbar**: Fixed manual-mode hotbar sizing bug, added safe slot index clamping (`0..8`), and styled slot selection with Furina Hydro feedback.
+- [x] **1-Click Lag-Free Performance Optimizer**: Smart RAM auto-allocation for modern 64-bit devices (up to 6144 MB), low-latency G1GC JVM flags (`35ms` max pause), Big-Core CPU affinity, and resolution scaling presets.
+- [x] **Streamlined 1-Tap Mod &amp; Modpack Hub**: Defaults to Modrinth for instant API-key-free browsing and includes 1-tap FPS Boost search pills for **Sodium**, **Lithium**, **FerriteCore**, **EntityCulling**, **Fabulously Optimized**, and **Simply Optimized**.
+- [x] **Bug Fixes &amp; JRE 25 Support**: Fixed `JREUtils.setCustomEnv` crash on blank/malformed lines, closed file stream leaks, fixed `LauncherActivity` observer memory leaks, and added Java 25 (`jre-25`) runtime support.
 
 <h2 align="center">Screenshots</h2>
 

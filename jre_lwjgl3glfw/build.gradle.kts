@@ -4,8 +4,6 @@ plugins {
 
 group = "org.lwjgl.glfw"
 
-configurations.getByName("default").isCanBeResolved = true
-
 tasks.jar {
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
     archiveBaseName.set("lwjgl-glfw-classes")
@@ -16,7 +14,7 @@ tasks.jar {
         versionFile.writeText(System.currentTimeMillis().toString())
     }
     from({
-        configurations.getByName("default").map {
+        configurations.getByName("runtimeClasspath").map {
             println(it.name)
             if (it.isDirectory) it else zipTree(it)
         }

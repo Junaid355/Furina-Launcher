@@ -167,10 +167,10 @@ class AllSettings {
         val animation = BooleanSettingUnit("animation", true)
 
         @JvmStatic
-        val animationSpeed = IntSettingUnit("animationSpeed", 600)
+        val animationSpeed = IntSettingUnit("animationSpeed", 280)
 
         @JvmStatic
-        val pageOpacity = IntSettingUnit("pageOpacity", 100)
+        val pageOpacity = IntSettingUnit("pageOpacity", 95)
 
         @JvmStatic
         val enableLogOutput = BooleanSettingUnit("enableLogOutput", false)
@@ -186,10 +186,10 @@ class AllSettings {
         val dumpShaders = BooleanSettingUnit("dump_shaders", false)
 
         @JvmStatic
-        val bigCoreAffinity = BooleanSettingUnit("bigCoreAffinity", false)
+        val bigCoreAffinity = BooleanSettingUnit("bigCoreAffinity", true)
 
         @JvmStatic
-        val tcVibrateDuration = IntSettingUnit("tcVibrateDuration", 100)
+        val tcVibrateDuration = IntSettingUnit("tcVibrateDuration", 80)
 
         // Other
         @JvmStatic

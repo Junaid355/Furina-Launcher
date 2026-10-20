@@ -503,7 +503,11 @@ public class LauncherActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        if (checkNotice != null) {
+            checkNotice.cancel(true);
+        }
         binding.progressLayout.cleanUpObservers();
+        ProgressKeeper.removeTaskCountListener(mDoubleLaunchPreventionListener);
         ProgressKeeper.removeTaskCountListener(binding.progressLayout);
         ProgressKeeper.removeTaskCountListener(mProgressServiceKeeper);
 

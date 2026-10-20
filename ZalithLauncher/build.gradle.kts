@@ -1,13 +1,6 @@
-import com.android.build.api.variant.FilterConfiguration.FilterType.ABI
-import com.android.build.gradle.tasks.MergeSourceSetFolders
-import com.github.megatronking.stringfog.plugin.StringFogExtension
-
 plugins {
     id("com.android.application")
-    id("org.jetbrains.kotlin.android") version "2.0.21"
-    id("stringfog")
 }
-apply(plugin = "stringfog")
 
 val getCFApiKey = {
     System.getenv("CURSEFORGE_API_KEY") ?: run {
@@ -28,7 +21,7 @@ val getBuildType = {
 }
 
 val nameId = "com.movtery.zalithlauncher"
-val generatedZalithDir = file("$buildDir/generated/source/zalith/java")
+val generatedZalithDir = file("${layout.buildDirectory.get().asFile}/generated/source/zalith/java")
 val launcherAPPName = project.findProperty("launcher_app_name") as? String ?: error("The \"launcher_app_name\" property is not set in gradle.properties.")
 val launcherName = project.findProperty("launcher_name") as? String ?: error("The \"launcher_name\" property is not set in gradle.properties.")
 val launcherVersionCode = (project.findProperty("launcher_version_code") as? String)?.toIntOrNull() ?: error("The \"launcher_version_code\" property is not set as an integer in gradle.properties.")
@@ -41,16 +34,9 @@ configurations {
     }
 }
 
-configure<StringFogExtension> {
-    implementation = "com.github.megatronking.stringfog.xor.StringFogImpl"
-    fogPackages = arrayOf(nameId)
-    kg = com.github.megatronking.stringfog.plugin.kg.RandomKeyGenerator()
-    mode = com.github.megatronking.stringfog.plugin.StringFogMode.bytes
-}
-
 android {
     namespace = nameId
-    compileSdk = 34
+    compileSdk = 36
 
     signingConfigs {
         create("releaseBuild") {
@@ -60,8 +46,8 @@ android {
             keyAlias = "mtp"
             keyPassword = pwd
         }
-        create("customDebug") {
-            storeFile = file("debug.keystore")
+        create("debugConfig") {
+            storeFile = file("${rootDir}/debug.keystore")
             storePassword = "android"
             keyAlias = "androiddebugkey"
             keyPassword = "android"
@@ -71,7 +57,7 @@ android {
     defaultConfig {
         applicationId = nameId
         minSdk = 26
-        targetSdk = 34
+        targetSdk = 36
         versionCode = launcherVersionCode
         versionName = launcherVersionName
         multiDexEnabled = true //important
@@ -86,7 +72,7 @@ android {
             isMinifyEnabled = false
             isShrinkResources = false
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
-            signingConfig = signingConfigs.getByName("customDebug")
+            signingConfig = signingConfigs.getByName("debugConfig")
             resValue("string", "storageProviderAuthorities", "$storageProviderId.debug")
         }
         create("proguard") {
@@ -101,70 +87,13 @@ android {
         getByName("release") {
             // Don't set to true or java.awt will be a.a or something similar.
             isMinifyEnabled = false
-            proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
+            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
             resValue("string", "storageProviderAuthorities", storageProviderId)
             signingConfig = signingConfigs.getByName("releaseBuild")
         }
     }
 
     sourceSets["main"].java.srcDirs(generatedZalithDir)
-
-    androidComponents {
-        onVariants { variant ->
-            variant.outputs.forEach { output ->
-                if (output is com.android.build.api.variant.impl.VariantOutputImpl) {
-                    val variantName = variant.name.replaceFirstChar { it.uppercaseChar() }
-                    afterEvaluate {
-                        val task = tasks.named("merge${variantName}Assets").get() as MergeSourceSetFolders
-                        task.doLast {
-                            val arch = System.getProperty("arch", "all")
-                            val assetsDir = task.outputDir.get().asFile
-                            val jreList = listOf("jre-8", "jre-17", "jre-21")
-                            println("arch:$arch")
-                            jreList.forEach { jreVersion ->
-                                val runtimeDir = File("$assetsDir/components/$jreVersion")
-                                println("runtimeDir:${runtimeDir.absolutePath}")
-                                runtimeDir.listFiles()?.forEach {
-                                    if (arch != "all" && it.name != "version" && !it.name.contains("universal") && it.name != "bin-${arch}.tar.xz") {
-                                        println("delete:${it} : ${it.delete()}")
-                                    }
-                                }
-                            }
-                        }
-                    }
-
-                    (output.getFilter(ABI)?.identifier ?: "all").let { abi ->
-                        val baseName = "$launcherName-${if (variant.buildType == "release") defaultConfig.versionName else "Debug-${defaultConfig.versionName}"}"
-                        output.outputFileName = if (abi == "all") "$baseName.apk" else "$baseName-$abi.apk"
-                    }
-                }
-            }
-        }
-    }
-
-    splits {
-        val arch = System.getProperty("arch", "all")
-        if (arch != "all") {
-            abi {
-                isEnable = true
-                reset()
-                when (arch) {
-                    "arm" -> include("armeabi-v7a")
-                    "arm64" -> include("arm64-v8a")
-                    "x86" -> include("x86")
-                    "x86_64" -> include("x86_64")
-                }
-            }
-        }
-    }
-
-    ndkVersion = "25.2.9519653"
-
-    externalNativeBuild {
-        ndkBuild {
-            path = file("src/main/jni/Android.mk")
-        }
-    }
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
@@ -182,12 +111,10 @@ android {
         prefab = true
         buildConfig = true
         viewBinding = true
+        resValues = true
     }
 
-    buildToolsVersion = "34.0.0"
-    kotlinOptions {
-        jvmTarget = "1.8"
-    }
+    buildToolsVersion = "36.0.0"
 }
 
 fun generateJavaClass(sourceOutputDir: File, packageName: String, className: String, constantMap: Map<String, String>) {
